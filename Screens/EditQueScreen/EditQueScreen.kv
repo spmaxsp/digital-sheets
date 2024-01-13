@@ -1,0 +1,48 @@
+<EditQueScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            id: top_app_bar
+            title: "Edit Que"
+            anchor_title: "left"
+            right_action_items: [["check", lambda x: root.apply_que()]]
+
+        FloatLayout:
+            ScrollView:
+                MDList:
+                    id: que_list
+
+            MDFloatingActionButton:
+                icon: "plus"
+                md_bg_color: app.theme_cls.primary_color
+                pos_hint: {'center_x': 0.9, 'center_y': 0.1}
+                on_press: root.open_add_item_dialog()
+
+
+<EditQueListItem>:
+    on_size:
+        self.ids._right_container.width = self.width * 0.2
+        self.ids._right_container.x = up_down_buttons.width - self.ids._right_container.width
+
+    IconLeftWidget:
+        icon: "trash-can-outline"
+        on_press: root.remove_func(root)
+
+    UpDownButtons:
+        id: up_down_buttons
+        MDIconButton:
+            icon: "chevron-up"
+            on_press: root.move_up_func(root)
+        MDIconButton:
+            icon: "chevron-down"
+            on_press: root.move_down_func(root)
+
+<AddToQueDialogContent>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDList:
+        id: file_list
+

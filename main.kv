@@ -1,0 +1,29 @@
+
+#:include Screens/MainScreen/MainScreen.kv
+#:include Screens/EditQueScreen/EditQueScreen.kv
+#:include Screens/ShowFileScreen/ShowFileScreen.kv
+
+MainScreenManager:
+    id: main_screen_manager
+    name: 'main_screen_manager'
+    MainScreen:
+        id: main_screen
+        name: 'main_screen'
+    EditQueScreen:
+        id: edit_que_screen
+        name: 'edit_que_screen'
+    ShowFileScreen:
+        id: show_file_screen
+        name: 'show_file_screen'
+
+
+
+<NameDialogContent>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        hint_text: "Name"
+        id: name_textfield

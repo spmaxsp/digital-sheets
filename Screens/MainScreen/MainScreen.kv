@@ -1,0 +1,58 @@
+
+<MainScreen>:
+    MDBottomNavigation:
+        text_color_active: "lightgrey"
+        selected_color_background: app.theme_cls.primary_color
+        FileTab:
+            id: file_tab
+            name: 'file_tab'
+            text: 'Files'
+            icon: 'file'
+        QueTab:
+            id: que_tab
+            name: 'que_tab'
+            text: 'Ques'
+            icon: 'playlist-star'
+
+
+<FileTab>:
+    FloatLayout:
+        ScrollView:
+            MDList:
+                id: file_list
+        MDFloatingActionButton:
+            icon: "plus"
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.9, 'center_y': 0.1}
+            on_press: root.new_file()
+
+<FileListItem>:
+    IconLeftWidget:
+        icon: "trash-can-outline"
+        on_press: root.remove_func(root.file_id)
+
+    IconRightWidget:
+        icon: "repeat-variant"
+        on_press: root.remap_func(root.file_id)
+
+
+
+<QueTab>:
+    FloatLayout:
+        ScrollView:
+            MDList:
+                id: que_list
+        MDFloatingActionButton:
+            icon: "plus"
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.9, 'center_y': 0.1}
+            on_press: root.new_que()
+
+<QueListItem>:
+    IconLeftWidget:
+        icon: "trash-can-outline"
+        on_press: root.remove_func(root.que_id)
+
+    IconRightWidget:
+        icon: "pen"
+        on_press: root.edit_func(root.que_id)

@@ -1,0 +1,46 @@
+<ShowFileScreen>:
+    size_hint: (1, 1)
+    md_bg_color: app.theme_cls.primary_color
+    FloatLayout:
+        size_hint: (1, 1)
+        size: root.size
+        ScrollView:
+            id: scroll_view
+            orientation: 'vertical'
+            id: pdf_display
+            size_hint: (1, 1)
+            size: root.size
+            Image:
+                id: image
+                size: (root.width, root.width / self.image_ratio)
+                size_hint: (1, None)
+                allow_stretch: True
+                keep_ratio: False
+                source: 'cache\\0.png'
+
+        MDFloatingActionButton:
+            icon: "arrow-left-thick"
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.1, 'center_y': 0.2}
+            opacity: 0
+            disabled: True
+            id: float_left_button
+            on_press: root.show_previous_func(root.file_id)
+
+        MDFloatingActionButton:
+            icon: "arrow-right-thick"
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.9, 'center_y': 0.2}
+            opacity: 0
+            disabled: True
+            id: float_right_button
+            on_press: root.show_next_func(root.file_id)
+
+        MDFloatingActionButton:
+            icon: "close-box"
+            md_bg_color: app.theme_cls.primary_color
+            pos_hint: {'center_x': 0.1, 'center_y': 0.9}
+            opacity: 0
+            disabled: True
+            id: float_back_button
+            on_press: app.return_to_main_screen()
