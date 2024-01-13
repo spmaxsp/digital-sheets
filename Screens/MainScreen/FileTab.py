@@ -5,7 +5,7 @@ from kivymd.uix.bottomnavigation import MDBottomNavigationItem
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.toast import toast
 
-import fitz
+from PIL import Image
 
 
 class FileTab(MDBottomNavigationItem):  
@@ -24,7 +24,7 @@ class FileTab(MDBottomNavigationItem):
         
     def new_file(self):
         self.app.file_manager_open(callback=self.new_file_selection, 
-                                    name="Select PDF file")
+                                    name="Select Image file")
         
     def show_file(self, file_id):
         self.app.root.ids.show_file_screen.show_file(file_id=file_id,
@@ -52,7 +52,7 @@ class FileTab(MDBottomNavigationItem):
 
         if path:
             if os.path.exists(path) and os.path.isfile(path):
-                if path.endswith('.pdf') or path.endswith('.PDF'):
+                if path.endswith('.png') or path.endswith('.jpg') or path.endswith('.PNG') or path.endswith('.JPG'):
                     self.app.open_name_entry_dialog(
                                                     callback=self.new_file_named, 
                                                     name="Enter display name", 
@@ -60,17 +60,16 @@ class FileTab(MDBottomNavigationItem):
                                                     path=path
                                                     )
                 else:
-                    toast("File must be a PDF")
+                    toast("File must be a Image")
 
-    def render_pdf(self, pdf_path, cache_path):
+    def save_as_png(self, image_path, cache_path):
         try:
-            doc = fitz.open(pdf_path)
-            pix = doc[0].get_pixmap()
-            pix.save(cache_path)
+            im = Image.open(image_path)
+            im.save(cache_path)
             return True
         except Exception as e:
-            print("Error rendering pdf: ", e)
-            toast("Error rendering pdf")
+            print("Error Importing File", e)
+            toast("Error Importing File")
             return False
         
     def new_file_named(self, name, path):
@@ -79,7 +78,7 @@ class FileTab(MDBottomNavigationItem):
         file_id = self.generate_id()
         cache_path = f"./db/render/{file_id}.png"
 
-        if self.render_pdf(path, cache_path):
+        if self.save_as_png(path, cache_path):
             self.app.db['files'][file_id] ={
                 'name': name,
                 'path': path
