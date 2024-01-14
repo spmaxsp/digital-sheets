@@ -16,6 +16,13 @@ from Screens.MainScreen.MainScreen import MainScreen
 from Screens.EditQueScreen.EditQueScreen import EditQueScreen
 from Screens.ShowFileScreen.ShowFileScreen import ShowFileScreen
 
+
+from android.storage import primary_external_storage_path
+primary_ext_storage = primary_external_storage_path()
+
+from android.permissions import request_permissions, Permission
+request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+
 class MainScreenManager(ScreenManager):
     def change_screen(self, new_screen):
         print('main screen manager')
@@ -59,8 +66,8 @@ class MainApp(MDApp):
         self.file_manager.selector = file_type
         self.file_manager.name = name
         self.file_manager.select_path = lambda path: callback(path, *args, **kwargs)
-        user_folder = os.path.expanduser('~')
-        self.file_manager.show(user_folder)
+        #user_folder = os.path.expanduser('~')
+        self.file_manager.show(primary_ext_storage)
         self.manager_open = True
 
     def exit_manager(self, *args):
